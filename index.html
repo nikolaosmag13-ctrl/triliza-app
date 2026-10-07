@@ -3,161 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Τρίλιζα</title>
-  
-  <!-- Σύνδεση με το PWA Manifest -->
+  <title>Τρίλιζα PWA</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4f46e5">
-
-  <!-- Tailwind CSS για γραφικά και στυλ -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Τρίλιζα">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .cell {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+  </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col items-center justify-center p-4 antialiased select-none">
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
 
-  <!-- Κεντρικό Πλαίσιο Παιχνιδιού -->
-  <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-2xl max-w-sm w-full text-center">
-    
-    <h1 class="text-2xl font-black text-indigo-400 tracking-wider uppercase mb-4">Τρίλιζα</h1>
+  <div class="bg-slate-800 p-5 rounded-2xl shadow-2xl flex flex-col items-center max-w-xs w-full border border-slate-700">
+    <h1 class="text-2xl font-extrabold mb-3 tracking-wide text-indigo-400">ΤΡΙΛΙΖΑ</h1>
 
     <!-- Πίνακας Σκορ -->
-    <div class="grid grid-cols-3 gap-2 bg-slate-900/60 p-3 rounded-2xl mb-6 border border-slate-700/60 text-xs">
-      <div>
-        <span class="text-slate-400 block mb-0.5">Παίκτης X</span>
-        <span id="scoreX" class="text-lg font-bold text-emerald-400">0</span>
+    <div class="flex justify-between w-full mb-3 text-center text-xs font-semibold">
+      <div class="bg-slate-700/60 p-2 rounded-lg flex-1 mr-1">
+        <span class="text-emerald-400 block">Παίκτης X</span>
+        <span id="scoreX" class="text-lg">0</span>
       </div>
-      <div>
-        <span class="text-slate-400 block mb-0.5">Ισοπαλίες</span>
-        <span id="scoreDraw" class="text-lg font-bold text-slate-300">0</span>
+      <div class="bg-slate-700/60 p-2 rounded-lg flex-1 mr-1">
+        <span class="text-slate-400 block">Ισοπαλίες</span>
+        <span id="scoreDraw" class="text-lg">0</span>
       </div>
-      <div>
-        <span class="text-slate-400 block mb-0.5">Παίκτης O</span>
-        <span id="scoreO" class="text-lg font-bold text-rose-400">0</span>
+      <div class="bg-slate-700/60 p-2 rounded-lg flex-1">
+        <span class="text-rose-400 block">Παίκτης O</span>
+        <span id="scoreO" class="text-lg">0</span>
       </div>
     </div>
 
-    <!-- Μήνυμα Σειράς / Νικητή -->
-    <div id="statusMessage" class="text-sm font-semibold text-slate-300 mb-4 h-6">
+    <!-- Κατάσταση -->
+    <div id="statusText" class="text-base font-medium mb-3 text-slate-200">
       Σειρά: <span class="text-emerald-400 font-bold">X</span>
     </div>
 
-    <!-- Ταμπλό 3x3 -->
-    <div id="board" class="grid grid-cols-3 gap-3 max-w-[280px] mx-auto mb-6">
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="0"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="1"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="2"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="3"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="4"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="5"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="6"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="7"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="8"></button>
+    <!-- Πλέγμα 3x3 -->
+    <div class="grid grid-cols-3 gap-2 w-60 h-60 mb-4">
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="0"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="1"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="2"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="3"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="4"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="5"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="6"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="7"></button>
+      <button class="cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600" data-index="8"></button>
     </div>
 
-    <!-- Κουμπί Επανεκκίνησης -->
-    <button id="restartBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-lg shadow-indigo-600/30">
+    <button id="resetBtn" class="w-full bg-indigo-600 active:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-xl text-sm transition">
       Νέος Γύρος
     </button>
   </div>
 
-  <!-- ΕΔΩ ΞΕΚΙΝΑΕΙ Ο ΚΩΔΙΚΑΣ JAVASCRIPT -->
   <script>
-    // -------------------------------------------------------------
-    // 1. ΕΓΓΡΑΦΗ SERVICE WORKER ΓΙΑ ΤΟ PWA (ΕΔΩ ΜΠΑΙΝΕΙ Ο ΚΩΔΙΚΑΣ)
-    // -------------------------------------------------------------
+    // Εγγραφή του Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('https://nikolaosmag13-ctrl.github.io/triliza-app/sw.js', {
-          scope: 'https://nikolaosmag13-ctrl.github.io/triliza-app/'
-        })
-        .then((reg) => console.log('Triliza SW ενεργός στο scope:', reg.scope))
-        .catch((err) => console.error('Σφάλμα Triliza SW:', err));
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('Service Worker καταχωρήθηκε:', reg.scope))
+          .catch((err) => console.error('Σφάλμα Service Worker:', err));
       });
     }
 
-    // -------------------------------------------------------------
-    // 2. ΛΟΓΙΚΗ ΠΑΙΧΝΙΔΙΟΥ ΤΡΙΛΙΖΑΣ
-    // -------------------------------------------------------------
-    let boardState = ["", "", "", "", "", "", "", "", ""];
+    // Κατάσταση & Λογική Παιχνιδιού
+    const boardState = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer = "X";
     let isGameActive = true;
-    let score = { X: 0, O: 0, Draw: 0 };
+    let scores = { X: 0, O: 0, Draw: 0 };
 
-    const WINNING_COMBINATIONS = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Οριζόντιες
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Κάθετες
-      [0, 4, 8], [2, 4, 6]             // Διαγώνιες
+    const winConditions = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
     ];
 
     const cells = document.querySelectorAll(".cell");
-    const statusMsg = document.getElementById("statusMessage");
-    const restartBtn = document.getElementById("restartBtn");
-    const scoreXEl = document.getElementById("scoreX");
-    const scoreOEl = document.getElementById("scoreO");
-    const scoreDrawEl = document.getElementById("scoreDraw");
+    const statusText = document.getElementById("statusText");
+    const resetBtn = document.getElementById("resetBtn");
+    const scoreX = document.getElementById("scoreX");
+    const scoreO = document.getElementById("scoreO");
+    const scoreDraw = document.getElementById("scoreDraw");
 
-    function handleCellClick(event) {
-      const clickedCell = event.target;
-      const index = parseInt(clickedCell.getAttribute("data-index"));
+    function handleCellClick(e) {
+      const cell = e.target;
+      const index = parseInt(cell.getAttribute("data-index"));
 
       if (boardState[index] !== "" || !isGameActive) return;
 
       boardState[index] = currentPlayer;
-      clickedCell.textContent = currentPlayer;
-      clickedCell.classList.add(currentPlayer === "X" ? "text-emerald-400" : "text-rose-400");
+      cell.textContent = currentPlayer;
+      cell.classList.add(currentPlayer === "X" ? "text-emerald-400" : "text-rose-400");
 
-      checkGameResult();
+      checkResult();
     }
 
-    function checkGameResult() {
+    function checkResult() {
       let roundWon = false;
+      let winningCombo = [];
 
-      for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
-        const [a, b, c] = WINNING_COMBINATIONS[i];
+      for (let i = 0; i < winConditions.length; i++) {
+        const [a, b, c] = winConditions[i];
         if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
           roundWon = true;
+          winningCombo = [a, b, c];
           break;
         }
       }
 
       if (roundWon) {
-        statusMsg.innerHTML = `Νικητής: <span class="${currentPlayer === 'X' ? 'text-emerald-400' : 'text-rose-400'} font-bold">${currentPlayer} 🎉</span>`;
-        score[currentPlayer]++;
-        updateScores();
+        statusText.innerHTML = `Νίκη για τον <span class="${currentPlayer === 'X' ? 'text-emerald-400' : 'text-rose-400'} font-bold">${currentPlayer}</span>! 🎉`;
+        scores[currentPlayer]++;
+        updateScoreBoard();
+        winningCombo.forEach(idx => cells[idx].classList.add("bg-indigo-950", "ring-2", "ring-indigo-400"));
         isGameActive = false;
         return;
       }
 
       if (!boardState.includes("")) {
-        statusMsg.innerHTML = '<span class="text-slate-300 font-bold">Ισοπαλία! 🤝</span>';
-        score.Draw++;
-        updateScores();
+        statusText.textContent = "Ισοπαλία! 🤝";
+        scores.Draw++;
+        updateScoreBoard();
         isGameActive = false;
         return;
       }
 
       currentPlayer = currentPlayer === "X" ? "O" : "X";
-      statusMsg.innerHTML = `Σειρά: <span class="${currentPlayer === 'X' ? 'text-emerald-400' : 'text-rose-400'} font-bold">${currentPlayer}</span>`;
+      statusText.innerHTML = `Σειρά: <span class="${currentPlayer === 'X' ? 'text-emerald-400' : 'text-rose-400'} font-bold">${currentPlayer}</span>`;
     }
 
-    function updateScores() {
-      scoreXEl.textContent = score.X;
-      scoreOEl.textContent = score.O;
-      scoreDrawEl.textContent = score.Draw;
+    function updateScoreBoard() {
+      scoreX.textContent = scores.X;
+      scoreO.textContent = scores.O;
+      scoreDraw.textContent = scores.Draw;
     }
 
-    function restartRound() {
-      boardState = ["", "", "", "", "", "", "", "", ""];
-      isGameActive = true;
+    function resetRound() {
+      for (let i = 0; i < 9; i++) {
+        boardState[i] = "";
+        cells[i].textContent = "";
+        cells[i].className = "cell bg-slate-700 text-3xl font-bold rounded-xl flex items-center justify-center active:bg-slate-600";
+      }
       currentPlayer = "X";
-      statusMsg.innerHTML = 'Σειρά: <span class="text-emerald-400 font-bold">X</span>';
-      cells.forEach(cell => {
-        cell.textContent = "";
-        cell.classList.remove("text-emerald-400", "text-rose-400");
-      });
+      isGameActive = true;
+      statusText.innerHTML = 'Σειρά: <span class="text-emerald-400 font-bold">X</span>';
     }
 
     cells.forEach(cell => cell.addEventListener("click", handleCellClick));
-    restartBtn.addEventListener("click", restartRound);
+    resetBtn.addEventListener("click", resetRound);
   </script>
 </body>
 </html>
