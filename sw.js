@@ -1,14 +1,15 @@
-// Όνομα της προσωρινής μνήμης (cache)
-const CACHE_NAME = 'triliza-v1';
+// Αύξηση της έκδοσης σε v2 για να αναγκάσουμε τον browser να ανανεώσει την προσωρινή μνήμη
+const CACHE_NAME = 'triliza-v2';
 
-// Λίστα αρχείων που θα αποθηκευτούν τοπικά
 const ASSETS_TO_CACHE = [
+  './',
   './index.html',
   './manifest.json',
+  './icon-512.png',
   'https://cdn.tailwindcss.com'
 ];
 
-// Εγκατάσταση του Service Worker και αποθήκευση των αρχείων
+// Εγκατάσταση και προ-φόρτωση αρχείων
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -18,7 +19,7 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Ενεργοποίηση και καθαρισμός παλιών εκδόσεων cache αν υπάρξουν
+// Ενεργοποίηση και διαγραφή παλιάς μνήμης (v1)
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -34,7 +35,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Ανάκτηση δεδομένων: Πρώτα από την cache, αλλιώς από το δίκτυο
+// Σερβίρισμα από cache αν υπάρχει, αλλιώς λήψη από δίκτυο
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
