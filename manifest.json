@@ -1,17 +1,17 @@
 {
-  "id": "/triliza-app/",
+  "id": "triliza-pwa-unique-app-v1",
   "name": "Τρίλιζα Game",
   "short_name": "Τρίλιζα",
   "description": "Κλασικό παιχνίδι τρίλιζας",
-  "start_url": "/triliza-app/index.html",
-  "scope": "/triliza-app/",
+  "start_url": "https://nikolaosmag13-ctrl.github.io/triliza-app/",
+  "scope": "https://nikolaosmag13-ctrl.github.io/triliza-app/",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#4f46e5",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/triliza-app/icon-512.png",
+      "src": "https://nikolaosmag13-ctrl.github.io/triliza-app/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
