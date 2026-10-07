@@ -6,7 +6,7 @@
   <title>Τρίλιζα</title>
   
   <!-- Σύνδεση με το PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json?v=2">
   <meta name="theme-color" content="#4f46e5">
 
   <!-- Tailwind CSS για γραφικά και στυλ -->
@@ -42,15 +42,15 @@
 
     <!-- Ταμπλό 3x3 -->
     <div id="board" class="grid grid-cols-3 gap-3 max-w-[280px] mx-auto mb-6">
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="0"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="1"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="2"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="3"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="4"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="5"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="6"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="7"></button>
-      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all shadow-inner" data-index="8"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="0"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="1"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="2"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="3"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="4"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="5"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="6"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="7"></button>
+      <button class="cell bg-slate-700/70 hover:bg-slate-700 active:bg-slate-600 aspect-square rounded-2xl text-4xl font-black flex items-center justify-center transition-all duration-200 shadow-inner" data-index="8"></button>
     </div>
 
     <!-- Κουμπί Επανεκκίνησης -->
@@ -59,11 +59,8 @@
     </button>
   </div>
 
-  <!-- ΕΔΩ ΞΕΚΙΝΑΕΙ Ο ΚΩΔΙΚΑΣ JAVASCRIPT -->
   <script>
-    // -------------------------------------------------------------
-    // 1. ΕΓΓΡΑΦΗ SERVICE WORKER ΓΙΑ ΤΟ PWA (ΕΔΩ ΜΠΑΙΝΕΙ Ο ΚΩΔΙΚΑΣ)
-    // -------------------------------------------------------------
+    // 1. Εγγραφή Service Worker για το PWA
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('https://nikolaosmag13-ctrl.github.io/triliza-app/sw.js', {
@@ -74,17 +71,16 @@
       });
     }
 
-    // -------------------------------------------------------------
-    // 2. ΛΟΓΙΚΗ ΠΑΙΧΝΙΔΙΟΥ ΤΡΙΛΙΖΑΣ
-    // -------------------------------------------------------------
+    // 2. Μεταβλητές Κατάστασης Παιχνιδιού
     let boardState = ["", "", "", "", "", "", "", "", ""];
     let currentPlayer = "X";
     let isGameActive = true;
     let score = { X: 0, O: 0, Draw: 0 };
 
+    // Όλοι οι πιθανοί νικητήριοι συνδυασμοί
     const WINNING_COMBINATIONS = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Οριζόντιες
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Κάθετες
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Οριζόντιες γραμμές
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Κάθετες στήλες
       [0, 4, 8], [2, 4, 6]             // Διαγώνιες
     ];
 
@@ -95,6 +91,7 @@
     const scoreOEl = document.getElementById("scoreO");
     const scoreDrawEl = document.getElementById("scoreDraw");
 
+    // 3. Χειρισμός Πατήματος Κελιού
     function handleCellClick(event) {
       const clickedCell = event.target;
       const index = parseInt(clickedCell.getAttribute("data-index"));
@@ -108,13 +105,16 @@
       checkGameResult();
     }
 
+    // 4. Έλεγχος Αποτελέσματος και Τονισμός Νικητήριας Σειράς
     function checkGameResult() {
       let roundWon = false;
+      let winningLine = null;
 
       for (let i = 0; i < WINNING_COMBINATIONS.length; i++) {
         const [a, b, c] = WINNING_COMBINATIONS[i];
         if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
           roundWon = true;
+          winningLine = [a, b, c]; // Αποθήκευση των 3 νικητήριων θέσεων
           break;
         }
       }
@@ -124,9 +124,13 @@
         score[currentPlayer]++;
         updateScores();
         isGameActive = false;
+
+        // Εφαρμογή οπτικού τονισμού στα 3 κελιά
+        highlightWinningCells(winningLine, currentPlayer);
         return;
       }
 
+      // Έλεγχος για Ισοπαλία
       if (!boardState.includes("")) {
         statusMsg.innerHTML = '<span class="text-slate-300 font-bold">Ισοπαλία! 🤝</span>';
         score.Draw++;
@@ -135,27 +139,58 @@
         return;
       }
 
+      // Αλλαγή Σειράς Παίκτη
       currentPlayer = currentPlayer === "X" ? "O" : "X";
       statusMsg.innerHTML = `Σειρά: <span class="${currentPlayer === 'X' ? 'text-emerald-400' : 'text-rose-400'} font-bold">${currentPlayer}</span>`;
     }
 
+    // 5. Συνάρτηση Τονισμού Νικητήριων Κελιών
+    function highlightWinningCells(indices, winner) {
+      indices.forEach(idx => {
+        const cell = cells[idx];
+        cell.classList.remove("bg-slate-700/70");
+
+        if (winner === "X") {
+          // Πράσινο φωτεινό στυλ για τον παίκτη X
+          cell.classList.add("bg-emerald-950/80", "border-2", "border-emerald-400", "scale-105", "shadow-lg", "shadow-emerald-500/20");
+        } else {
+          // Ροζ/Κόκκινο φωτεινό στυλ για τον παίκτη O
+          cell.classList.add("bg-rose-950/80", "border-2", "border-rose-400", "scale-105", "shadow-lg", "shadow-rose-500/20");
+        }
+      });
+    }
+
+    // 6. Ενημέρωση Σκορ
     function updateScores() {
       scoreXEl.textContent = score.X;
       scoreOEl.textContent = score.O;
       scoreDrawEl.textContent = score.Draw;
     }
 
+    // 7. Επαναφορά Γύρου και Καθαρισμός Στυλ
     function restartRound() {
       boardState = ["", "", "", "", "", "", "", "", ""];
       isGameActive = true;
       currentPlayer = "X";
       statusMsg.innerHTML = 'Σειρά: <span class="text-emerald-400 font-bold">X</span>';
+
+      // Επαναφορά όλων των κελιών στην αρχική τους μορφή
       cells.forEach(cell => {
         cell.textContent = "";
+        // Αφαίρεση χρωμάτων γραμμάτων
         cell.classList.remove("text-emerald-400", "text-rose-400");
+        // Αφαίρεση εφέ νίκης
+        cell.classList.remove(
+          "bg-emerald-950/80", "border-emerald-400",
+          "bg-rose-950/80", "border-rose-400",
+          "border-2", "scale-105", "shadow-lg", "shadow-emerald-500/20", "shadow-rose-500/20"
+        );
+        // Επαναφορά κανονικού φόντου
+        cell.classList.add("bg-slate-700/70");
       });
     }
 
+    // Σύνδεση γεγονότων στα κουμπιά
     cells.forEach(cell => cell.addEventListener("click", handleCellClick));
     restartBtn.addEventListener("click", restartRound);
   </script>
